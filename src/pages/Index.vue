@@ -289,6 +289,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { ref } from 'vue'
+import Api from 'boot/axios'
 // import DG from '2gis-maps';
 export default defineComponent({
   name: 'PageIndex',
@@ -299,107 +300,13 @@ export default defineComponent({
     }
   },
   data: () => ({
-    // answers: {
-    //   Availability: {
-    //     rating: 0,
-    //     addition: null,
-    //     check: false,
-    //   },
-    //   Visual: {
-    //     rating: 0,
-    //     addition: null,
-    //     check: false,
-    //   },
-    //   Fill: {
-    //     rating: 0,
-    //     addition: null,
-    //     check: false,
-    //   },
-    //   Safety: {
-    //     rating: 0,
-    //     addition: null,
-    //     check: false,
-    //   },
-    //   Ecology: {
-    //     rating: 0,
-    //     addition: null,
-    //     check: false,
-    //   },
-    // },
 
     showDialog: true,
     map: null,
     curPoint: null,
     mark: [],
-    points: [
-      {
-        id: 1,
-        title: 'Общественно-культурный центр',
-        coords: [50.255812, 127.543821],
-        img: new URL('../assets/okc.jpg', import.meta.url).href,
-        answers: {
-          Availability: {
-            rating: 0,
-            addition: null,
-            check: false,
-          },
-          Visual: {
-            rating: 0,
-            addition: null,
-            check: false,
-          },
-          Fill: {
-            rating: 0,
-            addition: null,
-            check: false,
-          },
-          Safety: {
-            rating: 0,
-            addition: null,
-            check: false,
-          },
-          Ecology: {
-            rating: 0,
-            addition: null,
-            check: false,
-          },
-        },
-      },
-      {
-        id: 2,
-        title: 'Триумфальная арка',
-        coords: [50.256863,127.521545],
-        // img: './assets/arka.jpg'
-        img: new URL('../assets/arka.jpg', import.meta.url).href,
-        answers: {
-          Availability: {
-            rating: 0,
-            addition: null,
-            check: false,
-          },
-          Visual: {
-            rating: 0,
-            addition: null,
-            check: false,
-          },
-          Fill: {
-            rating: 0,
-            addition: null,
-            check: false,
-          },
-          Safety: {
-            rating: 0,
-            addition: null,
-            check: false,
-          },
-          Ecology: {
-            rating: 0,
-            addition: null,
-            check: false,
-          },
-        },
-      }
-    ]
+    points: null,
+    coords: [],
   }),
   methods: {
     test(e){
@@ -407,19 +314,29 @@ export default defineComponent({
       console.log(e);
     }
   },
-  mounted() {
+  async mounted() {
     let DG = require('2gis-maps');
     this.map = DG.map('map', {
       'center': [50.270136, 127.537874],
       'zoom': 13
     });
-    this.points.forEach((element) => {
-      this.mark.push(DG.marker(element.coords).addTo(this.map).bindPopup(element.title));
+    // this.points.forEach((element) => {
+    //   this.mark.push(DG.marker(element.coords).addTo(this.map).bindPopup(element.title));
+    // })
+
+  await Api.getAllPoints().then((response) => {
+      this.points = response.data;
+      this.points.forEach((element) => {
+        this.points[this.points.indexOf(element)].coords = [element.coordX, element.coordY];
+        this.mark.push(DG.marker(element.coords).addTo(this.map).bindPopup(element.title));
+      })
+      console.log(this.points)
     })
+
     this.mark.forEach((element => {
       element.on('click', (e) => {
         this.points.forEach((el) => {
-          if(el.title == e.target.getPopup()._bodyContent) {
+          if (el.title == e.target.getPopup()._bodyContent) {
             this.test(el);
             this.curPoint = el;
             this.showDialog = true;
@@ -429,11 +346,6 @@ export default defineComponent({
       })
     }))
 
-
-    // this.mark.on('click', (e) => {
-    //   // console.log(e);
-    //   this.test(e);
-    // })
   }
 })
 </script>
