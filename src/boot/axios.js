@@ -23,5 +23,11 @@ export default {
   },
   sendRating(object){
     return API.post('answers', object);
+  },
+  getAllAnswers(){
+    return API.get('answers')
+  },
+  getAnswerByPointId(id){
+    return API.get(`answers/getAnswersById/${id}`)
   }
 }
