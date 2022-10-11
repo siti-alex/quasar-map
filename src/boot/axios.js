@@ -21,4 +21,7 @@ export default {
   getAllPoints(){
     return API.get('points/getAllPoints')
   },
+  sendRating(object){
+    return API.post('answers', object);
+  }
 }

@@ -346,6 +346,7 @@ export default defineComponent({
         addition: null,
         check: false,
       },
+      addition: null
     },
   }),
   methods: {
@@ -355,7 +356,20 @@ export default defineComponent({
     send(){
       this.showDialog = false;
       console.log(this.answers);
-      this.showFinish = true;
+      let sendObject = {
+        pointId: this.curPoint.id,
+        availabitityRating: this.answers.Availability.rating,
+        visualRating: this.answers.Visual.rating,
+        fillRating: this.answers.Fill.rating,
+        safetyRating: this.answers.Safety.rating,
+        ecologyRating: this.answers.Ecology.rating,
+        addition: this.answers.addition
+      }
+      console.log(JSON.stringify(sendObject));
+      Api.sendRating(sendObject).then((el) => {
+        console.log(el);
+        this.showFinish = true;
+      })
     },
   },
   async mounted() {
