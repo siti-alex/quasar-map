@@ -2,7 +2,7 @@
   <q-page class="flex flex-center">
 <!--      <q-btn @click="test"></q-btn>-->
       <div id="map" style="min-height:100vh; width: 100%"></div>
-      <q-dialog v-if="curPoint" v-model="showDialog" full-width transition-show="rotate" transition-hide="rotate">
+      <q-dialog v-if="curPoint" persistent v-model="showDialog" full-width transition-show="rotate" transition-hide="rotate">
         <q-card>
             <q-img
               width="100%"
@@ -49,7 +49,7 @@
                     <div style="text-align: center;">
                       <div class="q-pa-md">
                         <q-rating
-                          v-model="curPoint.answers.Availability.rating"
+                          v-model="answers.Availability.rating"
                           size="4em"
                           :max="5"
                           color="primary"
@@ -71,10 +71,10 @@
                           </template>
                         </q-rating>
                       </div>
-                      <q-btn v-if="!curPoint.answers.Availability.check" flat color="primary" @click="curPoint.answers.Availability.check = true" label="Добавить отзыв" />
-                      <div v-if="curPoint.answers.Availability.check" class="q-pa-md" style="width: 100%;">
+                      <q-btn v-if="!answers.Availability.check" flat color="primary" @click="answers.Availability.check = true" label="Добавить отзыв" />
+                      <div v-if="answers.Availability.check" class="q-pa-md" style="width: 100%;">
                         <q-input
-                          v-model="curPoint.answers.Availability.addition"
+                          v-model="answers.Availability.addition"
                           filled
                           type="textarea"
                           label="Напишите имеющиеся пожелания"
@@ -96,7 +96,7 @@
                     <div style="text-align: center;">
                       <div class="q-pa-md">
                         <q-rating
-                          v-model="curPoint.answers.Visual.rating"
+                          v-model="answers.Visual.rating"
                           size="4em"
                           :max="5"
                           color="primary"
@@ -118,10 +118,10 @@
                           </template>
                         </q-rating>
                       </div>
-                      <q-btn v-if="!curPoint.answers.Visual.check" flat color="primary" @click="curPoint.answers.Visual.check = true" label="Добавить отзыв" />
-                      <div v-if="curPoint.answers.Visual.check" class="q-pa-md" style="width: 100%;">
+                      <q-btn v-if="!answers.Visual.check" flat color="primary" @click="answers.Visual.check = true" label="Добавить отзыв" />
+                      <div v-if="answers.Visual.check" class="q-pa-md" style="width: 100%;">
                         <q-input
-                          v-model="curPoint.answers.Visual.addition"
+                          v-model="answers.Visual.addition"
                           filled
                           type="textarea"
                           label="Напишите имеющиеся пожелания"
@@ -142,7 +142,7 @@
                     <div style="text-align: center;">
                       <div class="q-pa-md">
                         <q-rating
-                          v-model="curPoint.answers.Fill.rating"
+                          v-model="answers.Fill.rating"
                           size="4em"
                           :max="5"
                           color="primary"
@@ -164,10 +164,10 @@
                           </template>
                         </q-rating>
                       </div>
-                      <q-btn v-if="!curPoint.answers.Fill.check" flat color="primary" @click="curPoint.answers.Fill.check = true" label="Добавить отзыв" />
-                      <div v-if="curPoint.answers.Fill.check" class="q-pa-md" style="width: 100%;">
+                      <q-btn v-if="!answers.Fill.check" flat color="primary" @click="answers.Fill.check = true" label="Добавить отзыв" />
+                      <div v-if="answers.Fill.check" class="q-pa-md" style="width: 100%;">
                         <q-input
-                          v-model="curPoint.answers.Fill.addition"
+                          v-model="answers.Fill.addition"
                           filled
                           type="textarea"
                           label="Напишите имеющиеся пожелания"
@@ -187,7 +187,7 @@
                     <div style="text-align: center;">
                       <div class="q-pa-md">
                         <q-rating
-                          v-model="curPoint.answers.Safety.rating"
+                          v-model="answers.Safety.rating"
                           size="4em"
                           :max="5"
                           color="primary"
@@ -209,10 +209,10 @@
                           </template>
                         </q-rating>
                       </div>
-                      <q-btn v-if="!curPoint.answers.Safety.check" flat color="primary" @click="curPoint.answers.Safety.check = true" label="Добавить отзыв" />
-                      <div v-if="curPoint.answers.Safety.check" class="q-pa-md" style="width: 100%;">
+                      <q-btn v-if="!answers.Safety.check" flat color="primary" @click="answers.Safety.check = true" label="Добавить отзыв" />
+                      <div v-if="answers.Safety.check" class="q-pa-md" style="width: 100%;">
                         <q-input
-                          v-model="curPoint.answers.Safety.addition"
+                          v-model="answers.Safety.addition"
                           filled
                           type="textarea"
                           label="Напишите имеющиеся пожелания"
@@ -231,7 +231,7 @@
                     <div style="text-align: center;">
                       <div class="q-pa-md">
                         <q-rating
-                          v-model="curPoint.answers.Ecology.rating"
+                          v-model="answers.Ecology.rating"
                           size="4em"
                           :max="5"
                           color="primary"
@@ -253,10 +253,10 @@
                           </template>
                         </q-rating>
                       </div>
-                      <q-btn v-if="!curPoint.answers.Ecology.check" flat color="primary" @click="curPoint.answers.Ecology.check = true" label="Добавить отзыв" />
-                      <div v-if="curPoint.answers.Ecology.check" class="q-pa-md" style="width: 100%;">
+                      <q-btn v-if="!answers.Ecology.check" flat color="primary" @click="answers.Ecology.check = true" label="Добавить отзыв" />
+                      <div v-if="answers.Ecology.check" class="q-pa-md" style="width: 100%;">
                         <q-input
-                          v-model="curPoint.answers.Ecology.addition"
+                          v-model="answers.Ecology.addition"
                           filled
                           type="textarea"
                           label="Напишите имеющиеся пожелания"
@@ -268,7 +268,7 @@
                   <template v-slot:navigation>
                     <q-stepper-navigation>
                       <q-btn v-if="step < 6" @click="$refs.stepper.next()" color="primary" label="Продолжить" />
-                      <q-btn v-if="step === 6" @click="$refs.stepper.next()" color="primary" label="Завершить" />
+                      <q-btn v-if="step === 6" @click="send" color="primary" label="Завершить" />
                       <q-btn v-if="step > 1" flat color="primary" @click="$refs.stepper.previous()" label="Назад" class="q-ml-sm" />
                     </q-stepper-navigation>
                   </template>
@@ -280,6 +280,18 @@
           <q-card-actions align="right">
             <q-btn flat label="Отмена" color="primary" v-close-popup />
 <!--            <q-btn flat label="Accept" color="primary" v-close-popup />-->
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+      <q-dialog v-if="showFinish == true" v-model="showFinish" full-width transition-show="rotate" transition-hide="rotate">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">Спасибо, конечно...</div>
+          </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn flat label="Decline" color="primary" v-close-popup />
+            <q-btn flat label="Accept" color="primary" v-close-popup />
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -302,17 +314,49 @@ export default defineComponent({
   data: () => ({
 
     showDialog: true,
+    showFinish: false,
     map: null,
     curPoint: null,
     mark: [],
     points: null,
     coords: [],
+    answers: {
+      Availability: {
+        rating: 0,
+        addition: null,
+        check: false,
+      },
+      Visual: {
+        rating: 0,
+        addition: null,
+        check: false,
+      },
+      Fill: {
+        rating: 0,
+        addition: null,
+        check: false,
+      },
+      Safety: {
+        rating: 0,
+        addition: null,
+        check: false,
+      },
+      Ecology: {
+        rating: 0,
+        addition: null,
+        check: false,
+      },
+    },
   }),
   methods: {
     test(e){
-      console.log('Ты нажал по мне');
       console.log(e);
-    }
+    },
+    send(){
+      this.showDialog = false;
+      console.log(this.answers);
+      this.showFinish = true;
+    },
   },
   async mounted() {
     let DG = require('2gis-maps');
@@ -324,14 +368,14 @@ export default defineComponent({
     //   this.mark.push(DG.marker(element.coords).addTo(this.map).bindPopup(element.title));
     // })
 
-  await Api.getAllPoints().then((response) => {
-      this.points = response.data;
-      this.points.forEach((element) => {
-        this.points[this.points.indexOf(element)].coords = [element.coordX, element.coordY];
-        this.mark.push(DG.marker(element.coords).addTo(this.map).bindPopup(element.title));
+    await Api.getAllPoints().then((response) => {
+        this.points = response.data;
+        this.points.forEach((element) => {
+          this.points[this.points.indexOf(element)].coords = [element.coordX, element.coordY];
+          this.mark.push(DG.marker(element.coords).addTo(this.map).bindPopup(element.title));
+        })
+        console.log(this.points)
       })
-      console.log(this.points)
-    })
 
     this.mark.forEach((element => {
       element.on('click', (e) => {
