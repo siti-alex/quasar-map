@@ -1,6 +1,11 @@
 <template>
-  <div class="q-pa-md flex flex-center">
-    <div id="chartDiv" style="width: 100%; height: 400px;"></div>
+  <div>
+    <div class="row" style="padding: 50px" v-for="x in series" :key="series.indexOf(x)">
+<!--      <div class="col" id="chartDivVisualRating" style="width: 100%; height: 600px;"/>-->
+<!--      <div class="col" id="chartDivFillRating" style="width: 100%; height: 600px;"/>-->
+            <div class="col" v-bind:id="'chartDiv' + series.indexOf(x)" style="width: 100%; height: 600px;"/>
+    </div>
+
   </div>
 </template>
 
@@ -14,6 +19,7 @@ export default defineComponent({
   name: 'charts',
   data: () => ({
     answers: [],
+    series: [],
   }),
   async mounted() {
     // Api.getAllAnswers().then((response) => {
@@ -28,46 +34,54 @@ export default defineComponent({
       this.answers[this.answers.indexOf(element)].created = dateformat(element.createdAt, 'dd.mm.yyyy');
     })
     console.log(this.answers)
-    // JSC.Chart("chartDiv", {
-    //   series: [
-    //     {
-    //       points: [{ x: "A", y: 10 }, { x: "B", y: 5 }]
-    //     }
-    //   ]
-    // });
 
-    // let points = data.map(d => {
-    //   return { x: d.date, y: d.actual };
-    // });
-    // this.answers.forEach((element) => {
-    //   // JSC.Chart("chartDiv", {
-    //   //   series: [
-    //   //     {
-    //   //       points: [{ x: "A", y: 10 }, { x: "B", y: 5 }]
-    //   //     }
-    //   //   ]
-    //   // });
+
+    // let series = JSC.nest()
+    //   .key('createdAt')
+    //   .rollup('visualRating')
+    //   .series(this.answers)
     //
+    // let chart = JSC.chart('chartDivVisualRating', {
+    //   type: 'column',
+    //   defaultBox_boxVisible:false,
+    //   legend_visible:false,
+    //   series: series
     // })
 
-    // console.log(this.answers[0].createdAt)
+    // let series2 = JSC.nest()
+    //   .key('createdAt')
+    //   .rollup('fillRating')
+    //   .series(this.answers)
+    //
+    // let chart2 = JSC.chart('chartDivFillRating', {
+    //   type: 'column',
+    //   defaultBox_boxVisible:false,
+    //   legend_visible:false,
+    //   series: series2
+    // })
 
-    // var date = new Date(this.answers[0].createdAt);
-    // console.log(date.toUTCString())
-    // console.log(dateformat(this.answers[0].createdAt, 'dd.mm.yyyy'))
 
 
-    var series = JSC.nest()
-      .key('createdAt')
-      .rollup('visualRating')
-      .series(this.answers)
-
-    var chart = JSC.chart('chartDiv', {
-      type: 'column',
-      defaultBox_boxVisible:false,
-      legend_visible:false,
-      series: series
+    await this.answers.forEach((element) => {
+      // this.series.push(JSC.chart(`chartDiv${this.answers.indexOf(element)}`,{
+      //
+      // }))
+        this.series[this.answers.indexOf(element)] = (JSC.nest()
+          .key('createdAt'))
+          .rollup('fillRating')
+          .series(this.answers)
     })
+
+    this.series.forEach((element) => {
+        JSC.chart(`chartDiv${this.series.indexOf(element)}`, {
+            type: 'column',
+            debug: true,
+            defaultBox_boxVisible:false,
+            legend_visible:false,
+            series: this.series[this.series.indexOf(element)]
+        })
+    })
+
 
   }
 })
