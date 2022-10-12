@@ -1,5 +1,6 @@
 <template>
   <div>
+    <q-btn @click="test"></q-btn>
     <div class="row" style="padding: 50px" v-for="x in series" :key="series.indexOf(x)">
 <!--      <div class="col" id="chartDivVisualRating" style="width: 100%; height: 600px;"/>-->
 <!--      <div class="col" id="chartDivFillRating" style="width: 100%; height: 600px;"/>-->
@@ -21,12 +22,44 @@ export default defineComponent({
     answers: [],
     series: [],
   }),
+  methods: {
+    test(){
+      console.log(this.series);
+    },
+    xz(){
+      this.series[0] = JSC.nest()
+        .key('createdAt')
+        .rollup('fillRating')
+        .series(this.answers)
+
+      this.series[1] = JSC.nest()
+        .key('createdAt')
+        .rollup('availabitityRating')
+        .series(this.answers)
+
+      this.series[2] = JSC.nest()
+        .key('createdAt')
+        .rollup('visualRating')
+        .series(this.answers)
+
+      this.series[3] = JSC.nest()
+        .key('createdAt')
+        .rollup('safetyRating')
+        .series(this.answers)
+
+      this.series[4] = JSC.nest()
+        .key('createdAt')
+        .rollup('ecologyRating')
+        .series(this.answers)
+    }
+  },
   async mounted() {
     // Api.getAllAnswers().then((response) => {
     //   console.log(response);
     //
     // })
-    await Api.getAnswerByPointId(4).then((response) => {
+    // await Api.getAnswerByPointId(4).then((response) => {
+    await Api.getAllAnswers().then((response) => {
       console.log(response)
       this.answers = response.data;
     })
@@ -62,15 +95,44 @@ export default defineComponent({
 
 
 
-    await this.answers.forEach((element) => {
-      // this.series.push(JSC.chart(`chartDiv${this.answers.indexOf(element)}`,{
-      //
-      // }))
-        this.series[this.answers.indexOf(element)] = (JSC.nest()
-          .key('createdAt'))
-          .rollup('fillRating')
-          .series(this.answers)
-    })
+    // await this.answers.forEach((element) => {
+    //   // this.series.push(JSC.chart(`chartDiv${this.answers.indexOf(element)}`,{
+    //   //
+    //   // }))
+    //     this.series[this.answers.indexOf(element)] = (JSC.nest()
+    //       .key('createdAt'))
+    //       .rollup('fillRating')
+    //       .series(this.answers)
+    // })
+
+
+
+    // this.series[0] = JSC.nest()
+    //       .key('createdAt')
+    //       .rollup('fillRating')
+    //       .series(this.answers)
+    //
+    // this.series[1] = JSC.nest()
+    //   .key('createdAt')
+    //   .rollup('availabitityRating')
+    //   .series(this.answers)
+    //
+    // this.series[2] = JSC.nest()
+    //   .key('createdAt')
+    //   .rollup('visualRating')
+    //   .series(this.answers)
+    //
+    // this.series[3] = JSC.nest()
+    //   .key('createdAt')
+    //   .rollup('safetyRating')
+    //   .series(this.answers)
+    //
+    // this.series[4] = JSC.nest()
+    //   .key('createdAt')
+    //   .rollup('ecologyRating')
+    //   .series(this.answers)
+
+    await this.xz();
 
     this.series.forEach((element) => {
         JSC.chart(`chartDiv${this.series.indexOf(element)}`, {
