@@ -94,106 +94,11 @@ export default defineComponent({
     },
   },
   async mounted() {
-    // Api.getAllAnswers().then((response) => {
-    //   console.log(response);
-    //
-    // })
-    // await Api.getAnswerByPointId(4).then((response) => {
-    // await Api.getAllAnswers().then((response) => {
-    //   console.log(response)
-    //   this.answers = response.data;
-    // })
-    // this.answers.forEach((element) => {
-    //   this.answers[this.answers.indexOf(element)].created = dateformat(element.createdAt, 'dd.mm.yyyy');
-    // })
-    // console.log(this.answers)
 
-
-    // let series = JSC.nest()
-    //   .key('createdAt')
-    //   .rollup('visualRating')
-    //   .series(this.answers)
-    //
-    // let chart = JSC.chart('chartDivVisualRating', {
-    //   type: 'column',
-    //   defaultBox_boxVisible:false,
-    //   legend_visible:false,
-    //   series: series
-    // })
-
-    // let series2 = JSC.nest()
-    //   .key('createdAt')
-    //   .rollup('fillRating')
-    //   .series(this.answers)
-    //
-    // let chart2 = JSC.chart('chartDivFillRating', {
-    //   type: 'column',
-    //   defaultBox_boxVisible:false,
-    //   legend_visible:false,
-    //   series: series2
-    // })
-
-
-
-    // await this.answers.forEach((element) => {
-    //   // this.series.push(JSC.chart(`chartDiv${this.answers.indexOf(element)}`,{
-    //   //
-    //   // }))
-    //     this.series[this.answers.indexOf(element)] = (JSC.nest()
-    //       .key('createdAt'))
-    //       .rollup('fillRating')
-    //       .series(this.answers)
-    // })
-
-
-
-    // this.series[0] = JSC.nest()
-    //       .key('createdAt')
-    //       .rollup('fillRating')
-    //       .series(this.answers)
-    //
-    // this.series[1] = JSC.nest()
-    //   .key('createdAt')
-    //   .rollup('availabitityRating')
-    //   .series(this.answers)
-    //
-    // this.series[2] = JSC.nest()
-    //   .key('createdAt')
-    //   .rollup('visualRating')
-    //   .series(this.answers)
-    //
-    // this.series[3] = JSC.nest()
-    //   .key('createdAt')
-    //   .rollup('safetyRating')
-    //   .series(this.answers)
-    //
-    // this.series[4] = JSC.nest()
-    //   .key('createdAt')
-    //   .rollup('ecologyRating')
-    //   .series(this.answers)
-
-    // await this.xz();
-
-    // this.series.forEach((element) => {
-    //     JSC.chart(`chartDiv${this.series.indexOf(element)}`, {
-    //         type: 'column',
-    //         debug: true,
-    //         defaultBox_boxVisible:false,
-    //         legend_visible:false,
-    //         series: this.series[this.series.indexOf(element)]
-    //     })
-    // })
-
-    await Api.getAnswerByPointId(4).then((response) => {
+    await Api.getAnswerByPointId(this.$route.params.id).then((response) => {
       this.answers = response.data
     })
-    // this.answers[this.answers.indexOf(element)].created = dateformat(element.createdAt, 'dd.mm.yyyy');
     await this.answers.forEach((element) => {
-      // this.stats.availabitityRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.availabitityRating})
-      // this.stats.visualRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.visualRating})
-      // this.stats.fillRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.fillRating})
-      // this.stats.safetyRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.safetyRating})
-      // this.stats.ecologyRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.ecologyRating})
       this.stats.availabitityRating.points.push({x: element.createdAt, y: element.availabitityRating})
       this.stats.visualRating.points.push({x: element.createdAt, y: element.visualRating})
       this.stats.fillRating.points.push({x: element.createdAt, y: element.fillRating})
