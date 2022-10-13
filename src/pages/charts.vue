@@ -1,6 +1,8 @@
 <template>
   <div>
-    <q-btn @click="test"/>
+    <div class="flex flex-center">
+      <p class="text-h6" style="padding-top: 10px">Надпись</p>
+    </div>
     <div class="row q-pa-md flex flex-center">
       <div class="col" id="chartDivVisualRating" style="width: 100%; height: 300px;"/>
       <div class="col" id="chartDivAvailabitityRating" style="width: 100%; height: 300px;"/>
@@ -8,9 +10,11 @@
       <div class="col" id="chartDivSafetyRating" style="width: 100%; height: 300px;"/>
       <div class="col" id="chartDivEcologyRating" style="width: 100%; height: 300px;"/>
     </div>
-    <div class="q-pa-md flex flex-center">
-      <div class="col" id="chartDivSplitChart" style="width: 90%; height: 400px;"/>
+    <div class="q-pa-md flex flex-center row" style="padding: 30px">
+      <div class="col-9" id="chartDivSplitChart" style="height: 400px;"/>
+      <div class="col-3" id="chartDivRadarChart" style="height: 400px;"/>
     </div>
+
 
 
   </div>
@@ -332,7 +336,7 @@ export default defineComponent({
         crosshair_enabled: true,
         scale: { type: 'time' }
       },
-      title_label_text: '<b>Конкретная точка</b>',
+      title_label_text: '<b>Коррелирующая диаграмма</b>',
       series: [
         {
           name: 'Визуал',
@@ -353,6 +357,34 @@ export default defineComponent({
         {
           name: 'Экология',
           points: this.stats.ecologyRating.points
+        }
+      ]
+    })
+
+    let radarChart = JSC.chart('chartDivRadarChart', {
+      debug: false,
+      type: 'radar area',
+      legend_visible: false,
+      xAxis: {
+        scale: { type: 'time' }
+      },
+      title: {
+        position: 'center',
+        label: {
+          text: '<b>Количество голосов за месяц</b>',
+          style: { fontSize: 15, fontWeight: 'normal' }
+        }
+      },
+      defaultSeries: {
+        opacity: 0.7,
+        defaultPoint_marker: {
+          outline: { color: 'white', width: 2 },
+          size: 12
+        }
+      },
+      series: [
+        {
+          points: this.stats.safetyRating.points
         }
       ]
     })
