@@ -1,6 +1,6 @@
 <template>
   <div>
-<!--    <q-btn @click="test"></q-btn>-->
+    <q-btn @click="test">321</q-btn>
 <!--    <div class="row" style="padding: 50px" v-for="x in series" :key="series.indexOf(x)">-->
 <!--&lt;!&ndash;      <div class="col" id="chartDivVisualRating" style="width: 100%; height: 600px;"/>&ndash;&gt;-->
 <!--&lt;!&ndash;      <div class="col" id="chartDivFillRating" style="width: 100%; height: 600px;"/>&ndash;&gt;-->
@@ -55,8 +55,49 @@ export default defineComponent({
     }
   }),
   methods: {
+    sortByDate(){
+      this.stats.availabitityRating.points.sort((a,b) => {
+        a = new Date(a.x);
+        b = new Date(b.x);
+        return a.getTime()-b.getTime()
+      })
+
+      this.stats.visualRating.points.sort((a,b) => {
+        a = new Date(a.x);
+        b = new Date(b.x);
+        return a.getTime()-b.getTime()
+      })
+
+      this.stats.fillRating.points.sort((a,b) => {
+        a = new Date(a.x);
+        b = new Date(b.x);
+        return a.getTime()-b.getTime()
+      })
+
+      this.stats.safetyRating.points.sort((a,b) => {
+        a = new Date(a.x);
+        b = new Date(b.x);
+        return a.getTime()-b.getTime()
+      })
+
+      this.stats.ecologyRating.points.sort((a,b) => {
+        a = new Date(a.x);
+        b = new Date(b.x);
+        return a.getTime()-b.getTime()
+      })
+
+    },
     test(){
-      console.log(this.series);
+      // console.log(this.stats.availabitityRating.points);
+      // this.suka.sort((a,b) => {
+      //   return a.getTime()-b.getTime()
+      // })
+      // this.stats.availabitityRating.points.sort((a,b) => {
+      //     a = new Date(a.x);
+      //     b = new Date(b.x);
+      //     return a.getTime()-b.getTime()
+      // })
+
     },
     xz(){
       this.series[0] = JSC.nest()
@@ -182,13 +223,27 @@ export default defineComponent({
     })
     // this.answers[this.answers.indexOf(element)].created = dateformat(element.createdAt, 'dd.mm.yyyy');
     await this.answers.forEach((element) => {
-      this.stats.availabitityRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.availabitityRating})
-      this.stats.visualRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.visualRating})
-      this.stats.fillRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.fillRating})
-      this.stats.safetyRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.safetyRating})
-      this.stats.ecologyRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.ecologyRating})
+      // this.stats.availabitityRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.availabitityRating})
+      // this.stats.visualRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.visualRating})
+      // this.stats.fillRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.fillRating})
+      // this.stats.safetyRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.safetyRating})
+      // this.stats.ecologyRating.points.push({x: dateformat(element.createdAt, 'dd.mm.yyyy'), y: element.ecologyRating})
+      this.stats.availabitityRating.points.push({x: element.createdAt, y: element.availabitityRating})
+      this.stats.visualRating.points.push({x: element.createdAt, y: element.visualRating})
+      this.stats.fillRating.points.push({x: element.createdAt, y: element.fillRating})
+      this.stats.safetyRating.points.push({x: element.createdAt, y: element.safetyRating})
+      this.stats.ecologyRating.points.push({x: element.createdAt, y: element.ecologyRating})
     })
     console.log(this.stats)
+
+    // this.stats.availabitityRating.points.sort(function (a,b) {
+    //   var dateA = new Date(a.date).getTime();
+    //   var dateB = new Date(b.date).getTime();
+    //   return dateA > dateB ? 1 : -1;
+    // })
+
+    await this.sortByDate();
+
 
     let chartVisualRating = JSC.chart('chartDivVisualRating', {
       debug: true,
