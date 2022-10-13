@@ -1,19 +1,23 @@
 <template>
   <div>
-    <div class="flex flex-center">
-      <p class="text-h6" style="padding-top: 10px">Надпись</p>
+    <div v-show="showGui" class="fullscreen bg-white"></div>
+    <div class="flex flex-center" v-if="point">
+      <p class="text-h6" style="padding-top: 10px">{{point.title}}</p>
     </div>
-    <div class="row q-pa-md flex flex-center">
-      <div class="col" id="chartDivVisualRating" style="width: 100%; height: 300px;"/>
-      <div class="col" id="chartDivAvailabitityRating" style="width: 100%; height: 300px;"/>
-      <div class="col" id="chartDivFillRating" style="width: 100%; height: 300px;"/>
-      <div class="col" id="chartDivSafetyRating" style="width: 100%; height: 300px;"/>
-      <div class="col" id="chartDivEcologyRating" style="width: 100%; height: 300px;"/>
+    <div>
+      <div class="row q-pa-md flex flex-center">
+        <div class="col" id="chartDivVisualRating" style="width: 100%; height: 300px;"/>
+        <div class="col" id="chartDivAvailabitityRating" style="width: 100%; height: 300px;"/>
+        <div class="col" id="chartDivFillRating" style="width: 100%; height: 300px;"/>
+        <div class="col" id="chartDivSafetyRating" style="width: 100%; height: 300px;"/>
+        <div class="col" id="chartDivEcologyRating" style="width: 100%; height: 300px;"/>
+      </div>
+      <div class="q-pa-md flex flex-center row" style="padding: 30px">
+        <div class="col-9" id="chartDivSplitChart" style="height: 400px;"/>
+        <div class="col-3" id="chartDivRadarChart" style="height: 400px;"/>
+      </div>
     </div>
-    <div class="q-pa-md flex flex-center row" style="padding: 30px">
-      <div class="col-9" id="chartDivSplitChart" style="height: 400px;"/>
-      <div class="col-3" id="chartDivRadarChart" style="height: 400px;"/>
-    </div>
+
 
 
 
@@ -21,14 +25,40 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import {defineComponent, onBeforeUnmount} from 'vue'
 import * as JSC from "jscharting";
 import Api from 'boot/axios'
 import dateformat from "dateformat";
+import {useQuasar} from "quasar";
 
 export default defineComponent({
+  setup () {
+    const $q = useQuasar()
+    let timer
+
+    onBeforeUnmount(() => {
+      if (timer !== void 0) {
+        clearTimeout(timer)
+        $q.loading.hide()
+      }
+    })
+
+    return {
+      showLoading () {
+        $q.loading.show()
+        // hiding in 2s
+        timer = setTimeout(() => {
+          $q.loading.hide()
+          this.showGui = false
+          timer = void 0
+        }, 2000)
+      }
+    }
+  },
   name: 'charts',
   data: () => ({
+    showGui: true,
+    point: null,
     answers: [],
     series: [],
     stats: {
@@ -94,9 +124,13 @@ export default defineComponent({
     },
   },
   async mounted() {
-
+    this.showLoading();
     await Api.getAnswerByPointId(this.$route.params.id).then((response) => {
       this.answers = response.data
+      Api.getPointById(response.data[0].pointId).then((resp) => {
+        this.point = resp.data;
+        console.log(this.point)
+      })
     })
     await this.answers.forEach((element) => {
       this.stats.availabitityRating.points.push({x: element.createdAt, y: element.availabitityRating})

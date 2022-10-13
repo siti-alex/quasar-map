@@ -29,5 +29,8 @@ export default {
   },
   getAnswerByPointId(id){
     return API.get(`answers/getAnswersById/${id}`)
+  },
+  getPointById(id){
+    return API.get(`points/${id}`)
   }
 }
