@@ -1,11 +1,7 @@
 <template>
   <div>
     <div class="centered_div row" style="margin: auto">
-      <q-select class="col-11" v-model="selectPoint" :options="points" option-label="title"></q-select>
-      <div class="col-11">
-        <q-btn @click="goToPointChart" label="Анализировать"/>
-      </div>
-
+      <q-select class="col-11" label-color="primary" @update:model-value="val => goToPointChart(val)"  filled label="Выберите точку для анализа" :options="points" option-label="title"></q-select>
     </div>
 
   </div>
@@ -18,18 +14,17 @@ export default {
   name: "selectChart.vue",
   data: () => ({
     points: null,
-    selectPoint: null
   }),
   methods: {
     getPoints(){
       Api.getAllPoints().then((response) => {
         this.points = response.data;
-        this.selectPoint = response.data[0]
+        // this.selectPoint = response.data[0]
         console.log(this.points)
       })
     },
-    goToPointChart(){
-      console.log(this.selectPoint)
+    goToPointChart(val){
+      location.href = `/#/charts/${val.id}`;
     }
   },
   mounted() {
@@ -40,8 +35,9 @@ export default {
 
 <style scoped>
 .centered_div {
+  width: 70%;
   position: absolute;
-  top:  50%;
+  top:  30%;
   left: 50%;
   transform: translate(-50%,-50%);
 }
