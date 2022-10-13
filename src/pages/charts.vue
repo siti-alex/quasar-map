@@ -1,11 +1,6 @@
 <template>
   <div>
     <q-btn @click="test">321</q-btn>
-<!--    <div class="row" style="padding: 50px" v-for="x in series" :key="series.indexOf(x)">-->
-<!--&lt;!&ndash;      <div class="col" id="chartDivVisualRating" style="width: 100%; height: 600px;"/>&ndash;&gt;-->
-<!--&lt;!&ndash;      <div class="col" id="chartDivFillRating" style="width: 100%; height: 600px;"/>&ndash;&gt;-->
-<!--            <div class="col" v-bind:id="'chartDiv' + series.indexOf(x)" style="width: 100%; height: 600px;"/>-->
-<!--    </div>-->
     <div class="row q-pa-md flex flex-center">
       <div class="col" id="chartDivVisualRating" style="width: 100%; height: 300px;"/>
       <div class="col" id="chartDivAvailabitityRating" style="width: 100%; height: 300px;"/>
@@ -88,43 +83,8 @@ export default defineComponent({
 
     },
     test(){
-      // console.log(this.stats.availabitityRating.points);
-      // this.suka.sort((a,b) => {
-      //   return a.getTime()-b.getTime()
-      // })
-      // this.stats.availabitityRating.points.sort((a,b) => {
-      //     a = new Date(a.x);
-      //     b = new Date(b.x);
-      //     return a.getTime()-b.getTime()
-      // })
-
+      console.log(this.stats.availabitityRating.points);
     },
-    xz(){
-      this.series[0] = JSC.nest()
-        .key('createdAt')
-        .rollup('fillRating')
-        .series(this.answers)
-
-      this.series[1] = JSC.nest()
-        .key('createdAt')
-        .rollup('availabitityRating')
-        .series(this.answers)
-
-      this.series[2] = JSC.nest()
-        .key('createdAt')
-        .rollup('visualRating')
-        .series(this.answers)
-
-      this.series[3] = JSC.nest()
-        .key('createdAt')
-        .rollup('safetyRating')
-        .series(this.answers)
-
-      this.series[4] = JSC.nest()
-        .key('createdAt')
-        .rollup('ecologyRating')
-        .series(this.answers)
-    }
   },
   async mounted() {
     // Api.getAllAnswers().then((response) => {
@@ -218,7 +178,6 @@ export default defineComponent({
     // })
 
     await Api.getAnswerByPointId(4).then((response) => {
-      // console.log(response.data);
       this.answers = response.data
     })
     // this.answers[this.answers.indexOf(element)].created = dateformat(element.createdAt, 'dd.mm.yyyy');
@@ -236,17 +195,11 @@ export default defineComponent({
     })
     console.log(this.stats)
 
-    // this.stats.availabitityRating.points.sort(function (a,b) {
-    //   var dateA = new Date(a.date).getTime();
-    //   var dateB = new Date(b.date).getTime();
-    //   return dateA > dateB ? 1 : -1;
-    // })
-
     await this.sortByDate();
 
 
     let chartVisualRating = JSC.chart('chartDivVisualRating', {
-      debug: true,
+      debug: false,
       type: 'column',
       legend_visible: false,
       title: {
@@ -270,7 +223,7 @@ export default defineComponent({
       });
 
       let chartAvailabitityRating = JSC.chart('chartDivAvailabitityRating', {
-        debug: true,
+        debug: false,
         type: 'column',
         legend_visible: false,
         xAxis: {
@@ -297,7 +250,7 @@ export default defineComponent({
       })
 
       let chartFillRating = JSC.chart('chartDivFillRating', {
-        debug: true,
+        debug: false,
         type: 'column',
         legend_visible: false,
         title: {
@@ -321,7 +274,7 @@ export default defineComponent({
       })
 
     let chartSafetyRating = JSC.chart('chartDivSafetyRating', {
-      debug: true,
+      debug: false,
       type: 'column',
       legend_visible: false,
       title: {
@@ -345,7 +298,7 @@ export default defineComponent({
     })
 
     let chartEcologyRating = JSC.chart('chartDivEcologyRating', {
-      debug: true,
+      debug: false,
       type: 'column',
       legend_visible: false,
       title: {
