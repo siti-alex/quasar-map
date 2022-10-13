@@ -1,12 +1,15 @@
 <template>
   <div>
-    <q-btn @click="test">321</q-btn>
+    <q-btn @click="test"/>
     <div class="row q-pa-md flex flex-center">
       <div class="col" id="chartDivVisualRating" style="width: 100%; height: 300px;"/>
       <div class="col" id="chartDivAvailabitityRating" style="width: 100%; height: 300px;"/>
       <div class="col" id="chartDivFillRating" style="width: 100%; height: 300px;"/>
       <div class="col" id="chartDivSafetyRating" style="width: 100%; height: 300px;"/>
       <div class="col" id="chartDivEcologyRating" style="width: 100%; height: 300px;"/>
+    </div>
+    <div class="q-pa-md flex flex-center">
+      <div class="col" id="chartDivSplitChart" style="width: 90%; height: 400px;"/>
     </div>
 
 
@@ -200,7 +203,7 @@ export default defineComponent({
 
     let chartVisualRating = JSC.chart('chartDivVisualRating', {
       debug: false,
-      type: 'column',
+      type: 'area',
       legend_visible: false,
       title: {
         position: 'center',
@@ -224,7 +227,7 @@ export default defineComponent({
 
       let chartAvailabitityRating = JSC.chart('chartDivAvailabitityRating', {
         debug: false,
-        type: 'column',
+        type: 'area',
         legend_visible: false,
         xAxis: {
           defaultTick: { gridLine_width: 0, line_length: 0 }
@@ -251,7 +254,7 @@ export default defineComponent({
 
       let chartFillRating = JSC.chart('chartDivFillRating', {
         debug: false,
-        type: 'column',
+        type: 'area',
         legend_visible: false,
         title: {
           position: 'center',
@@ -275,7 +278,7 @@ export default defineComponent({
 
     let chartSafetyRating = JSC.chart('chartDivSafetyRating', {
       debug: false,
-      type: 'column',
+      type: 'area',
       legend_visible: false,
       title: {
         position: 'center',
@@ -299,7 +302,7 @@ export default defineComponent({
 
     let chartEcologyRating = JSC.chart('chartDivEcologyRating', {
       debug: false,
-      type: 'column',
+      type: 'area',
       legend_visible: false,
       title: {
         position: 'center',
@@ -320,6 +323,40 @@ export default defineComponent({
         }
       ]
     })
+
+    let splitChart = JSC.chart('chartDivSplitChart', {
+      legend_position: 'bottom right',
+      type: 'area spline',
+      defaultSeries: { shape_opacity: 0.5 },
+      xAxis: {
+        crosshair_enabled: true,
+        scale: { type: 'time' }
+      },
+      title_label_text: '<b>Конкретная точка</b>',
+      series: [
+        {
+          name: 'Визуал',
+          points: this.stats.visualRating.points
+        },
+        {
+          name: 'Доступность',
+          points: this.stats.availabitityRating.points
+        },
+        {
+          name: 'Наполнение',
+          points: this.stats.fillRating.points
+        },
+        {
+          name: 'Безопасность',
+          points: this.stats.safetyRating.points
+        },
+        {
+          name: 'Экология',
+          points: this.stats.ecologyRating.points
+        }
+      ]
+    })
+
 
 
 
