@@ -5,7 +5,7 @@
       <p class="text-h6" style="padding-top: 10px">{{point.title}}</p>
     </div>
     <div>
-      <div class="row q-pa-md flex flex-center">
+      <div class="row q-pa-md flex flex-center" style="height: 25vh">
         <div class="col" id="chartDivVisualRating" style="width: 100%; height: 300px;"/>
         <div class="col" id="chartDivAvailabitityRating" style="width: 100%; height: 300px;"/>
         <div class="col" id="chartDivFillRating" style="width: 100%; height: 300px;"/>
@@ -148,6 +148,7 @@ export default defineComponent({
       debug: false,
       type: 'area',
       legend_visible: false,
+      xAxis_visible: false,
       title: {
         position: 'center',
         label: {
@@ -171,6 +172,7 @@ export default defineComponent({
       let chartAvailabitityRating = JSC.chart('chartDivAvailabitityRating', {
         debug: false,
         type: 'area',
+        xAxis_visible: false,
         legend_visible: false,
         xAxis: {
           defaultTick: { gridLine_width: 0, line_length: 0 }
@@ -198,6 +200,7 @@ export default defineComponent({
       let chartFillRating = JSC.chart('chartDivFillRating', {
         debug: false,
         type: 'area',
+        xAxis_visible: false,
         legend_visible: false,
         title: {
           position: 'center',
@@ -222,6 +225,7 @@ export default defineComponent({
     let chartSafetyRating = JSC.chart('chartDivSafetyRating', {
       debug: false,
       type: 'area',
+      xAxis_visible: false,
       legend_visible: false,
       title: {
         position: 'center',
@@ -246,6 +250,7 @@ export default defineComponent({
     let chartEcologyRating = JSC.chart('chartDivEcologyRating', {
       debug: false,
       type: 'area',
+      xAxis_visible: false,
       legend_visible: false,
       title: {
         position: 'center',
