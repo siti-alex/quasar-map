@@ -30,9 +30,8 @@
                     icon="settings"
                     :done="step > 1"
                   >
-                    For each ad campaign that you create, you can control how much you're willing to
-                    spend on clicks and conversions, which networks and geographical locations you want
-                    your ads to show on, and more.
+                    Помогите нам составить общественное мнение по вопросам благоустройства основных точек интереса жителей города Благовещенск.
+                    Пройдите небольшой опрос, где вы сможете оценить выбранную вами точку по ряду критериев.
                   </q-step>
 
                   <q-step
@@ -42,10 +41,7 @@
                     :done="step > 2"
                   >
                     Доступность пространства характеризуется удобством для пешеходов,
-                    которые передвигаются по его территории. К факторам, влияющим на
-                    доступность для пешеходов относятся: связь между улицами, плотность
-                    жилых построек, наличие озеленения, также насколько часто расположены
-                    здания и их входы.
+                    которые передвигаются по его территории.
                     <div style="text-align: center;">
                       <div class="q-pa-md">
                         <q-rating
@@ -267,7 +263,8 @@
 
                   <template v-slot:navigation>
                     <q-stepper-navigation>
-                      <q-btn v-if="step < 6" @click="$refs.stepper.next()" color="primary" label="Продолжить" />
+                      <q-btn v-if="step == 1" @click="$refs.stepper.next()" color="primary" label="Начать" />
+                      <q-btn v-if="step < 6 && step !== 1" @click="$refs.stepper.next()" color="primary" label="Продолжить" />
                       <q-btn v-if="step === 6" @click="send" color="primary" label="Завершить" />
                       <q-btn v-if="step > 1" flat color="primary" @click="$refs.stepper.previous()" label="Назад" class="q-ml-sm" />
                     </q-stepper-navigation>
@@ -283,17 +280,21 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
-      <q-dialog v-if="showFinish == true" v-model="showFinish" full-width transition-show="rotate" transition-hide="rotate">
-        <q-card>
-          <q-card-section>
-            <div class="text-h6">Спасибо, конечно...</div>
-          </q-card-section>
+      <q-dialog v-if="showFinish == true" v-model="showFinish" transition-show="rotate" transition-hide="rotate">
+            <q-card style="width: 300px">
+              <q-card-section>
+                <div class="text-h6">Большое спасибо</div>
+              </q-card-section>
 
-          <q-card-actions align="right">
-            <q-btn flat label="Decline" color="primary" v-close-popup />
-            <q-btn flat label="Accept" color="primary" v-close-popup />
-          </q-card-actions>
-        </q-card>
+              <q-card-section class="q-pt-none">
+                Ваш голос учтён
+              </q-card-section>
+              <q-card-actions align="right" class="bg-white text-teal">
+                <q-btn flat label="OK" v-close-popup />
+              </q-card-actions>
+          </q-card>
+
+<!--          :ratio="4/3" src="https://static.s7cdn.online/hermes/RU/BQS/S7_1200x630_Blagoveshchensk.jpg">-->
       </q-dialog>
   </q-page>
 </template>
@@ -350,6 +351,9 @@ export default defineComponent({
     },
   }),
   methods: {
+    offFinish(){
+      this.showFinish = !this.showFinish;
+    },
     test(e){
       console.log(e);
     },
