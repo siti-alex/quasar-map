@@ -275,10 +275,11 @@ export default defineComponent({
     let splitChart = JSC.chart('chartDivSplitChart', {
       legend_position: 'bottom right',
       type: 'area spline',
+      xAxis_visible: false,
       defaultSeries: { shape_opacity: 0.5 },
       xAxis: {
         crosshair_enabled: true,
-        scale: { type: 'time' }
+        // scale: { type: 'time' }
       },
       title_label_text: '<b>Коррелирующая диаграмма</b>',
       series: [
